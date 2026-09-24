@@ -53,11 +53,15 @@ mindmesh/
 - RLS-політика обов'язкова на кожній таблиці, що містить `user_id` — без винятків
 - Компоненти: PascalCase, файли `.tsx`
 - Векторний пошук — тільки через pgvector, не додавати зовнішні vector DB
-- Секрети (API keys, service role key) — тільки через `.env.local`, ніколи не хардкодити і не комітити
+- Секрети (API keys, Supabase secret key) — тільки через `.env.local`, ніколи не хардкодити і не комітити
+- Ключі Supabase — тільки нова система: publishable (`sb_publishable_...`) і secret (`sb_secret_...`). Legacy `anon` / `service_role` не використовувати (виводяться з підтримки)
+- Env-змінні Supabase: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`
+- `SUPABASE_SECRET_KEY` — тільки в server-side коді (Server Actions, Route Handlers, Edge Functions), ніколи з префіксом `NEXT_PUBLIC_` і ніколи в клієнтських компонентах
 
 ## Що НЕ робити
 - Не чіпати `supabase/migrations` вручну без створення нового migration-файлу
 - Не хардкодити API-ключі — тільки через змінні середовища
+- Не використовувати legacy-ключі `anon` / `service_role` і змінні на кшталт `SUPABASE_ANON_KEY` / `SUPABASE_SERVICE_ROLE_KEY`
 - Не додавати нові великі залежності (vector DB, ORM, стейт-менеджери) без явного обговорення — стек зафіксований в PLAN.md
 
 ## Поточний статус

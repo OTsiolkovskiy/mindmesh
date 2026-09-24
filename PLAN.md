@@ -115,6 +115,9 @@ create policy "Users manage own notes" on notes
 
 ### Етап 1 — Supabase Auth
 - [ ] Підключити @supabase/supabase-js, @supabase/ssr
+- [ ] Ключі API — тільки нова система Supabase: publishable (`sb_publishable_...`) і secret (`sb_secret_...`); legacy `anon` / `service_role` не використовуємо
+- [ ] `.env.local`: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY` (+ `.env.example` без значень у репо)
+- [ ] Supabase-клієнти в `lib/supabase/`: browser і server (через `@supabase/ssr`) на publishable key; admin-клієнт на secret key — тільки server-side
 - [ ] Email/password реєстрація й логін
 - [ ] OAuth (Google, GitHub)
 - [ ] Захищені роути (middleware)
@@ -171,6 +174,7 @@ create policy "Users manage own notes" on notes
 - **Server Actions замість окремих API routes** — менше boilerplate, ближче до Next.js 15 ідіом
 - **RLS обов'язковий на кожній таблиці з user_id** — безпека на рівні БД, а не тільки на рівні коду
 - **Vercel AI SDK для стрімінгу** — стандарт для AI-чатів у Next.js, вбудована підтримка Claude
+- **Нові API-ключі Supabase (publishable/secret) замість legacy anon/service_role** — legacy JWT-ключі виводяться з підтримки; нові ключі можна ротувати незалежно, а secret key Supabase відхиляє при виклику з браузера
 - **Бекапи через GitHub Actions**, не через платні Supabase Pro бекапи — щоб лишатись у безплатному tier
 
 ## Що НЕ входить в MVP (можна додати пізніше)
